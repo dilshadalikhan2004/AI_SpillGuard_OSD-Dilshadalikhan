@@ -96,4 +96,3 @@ Evaluation metric: Accuracy
    Heatmap overlay of oil spill regions
 
 
-DEPLOYED LINK : https://huggingface.co/spaces/Dillu2004/spillguard-oil-detection
