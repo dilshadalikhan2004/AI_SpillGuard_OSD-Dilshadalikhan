@@ -94,3 +94,6 @@ Evaluation metric: Accuracy
     Predicted segmentation mask
 
    Heatmap overlay of oil spill regions
+
+
+DEPLOYED LINK : https://huggingface.co/spaces/Dillu2004/spillguard-oil-detection
