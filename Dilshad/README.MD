@@ -1,98 +1,92 @@
-🛢️ SpillGuard: Oil Spill Detection with U-Net :
 
-     This project implements an oil spill segmentation system using a U-Net deep learning model. The system is trained on satellite images and masks to detect oil
-     spills, and provides a Flask-based web interface for real-time predictions.
+# 🛢️ **AI SpillGuard – Intelligent Oil Spill Detection System**
+# 🚀 *Deep Learning powered environmental monitoring for marine safety*
 
+---
 
-📌 Features :
+## 🌍 Overview
+**AI SpillGuard** is an advanced deep learning system designed to detect oil spills in **Synthetic Aperture Radar (SAR)** satellite images.  
+It leverages **DeepLabV3+ (ResNet50)** architecture trained on custom SAR datasets, with advanced preprocessing, threshold optimization, and postprocessing for accurate segmentation.
 
-   --> Automated dataset extraction and preprocessing (images + masks).
+The system provides:
+- ✅ **Automatic detection of oil spill regions**
+- 🎯 **Dynamic threshold tuning** for optimal precision/recall balance
+- 🌊 **Real-time visualization** with probability heatmaps and overlay masks
+- 🧠 **Deployable web interface** (via **Gradio + Hugging Face Spaces**)
 
-   --> U-Net based segmentation for oil spill detection.
+---
 
-   --> Model training with checkpointing and extended training capability.
+## 🧠 Model Highlights
+| Component | Description |
+|------------|--------------|
+| **Architecture** | DeepLabV3+ (ResNet50 backbone) |
+| **Framework** | PyTorch + Segmentation Models PyTorch |
+| **Input Type** | SAR (Grayscale → 3-Channel Tensor) |
+| **Loss Function** | BCE + Dice Hybrid Loss |
+| **Optimization** | AdamW + CosineAnnealingLR |
+| **Key Metrics** | Dice Coefficient, mIoU, Precision, Recall |
+| **Threshold** | Optimized at `t = 0.65` for best Dice (~0.92) |
 
-   --> Visual comparison of original image, ground truth mask, and predicted mask.
+---
 
-   --> Flask web app with upload interface for real-time oil spill detection.
-
-   --> Overlay visualization (original image + predicted mask heatmap).
-
-
-⚙️ Installation :
-
-    1.Clone the repository.
-
-    2.Install the required dependencies (TensorFlow, Keras, Flask, OpenCV, Matplotlib, etc.).
-
-    3.If using Google Colab, mount Google Drive to load dataset and save models.
-
-
-
-📊 Dataset :
-
-   --> The dataset should include images and masks, organized into train, val, and test splits.
-
-   --> Images are resized to 128x128 and normalized to values between 0 and 1.
-
-   --> Masks are grayscale and used for binary segmentation (oil spill vs. background).
-
-
-
-🏗️ Model: U-Net Architecture : 
-
-     Encoder: Convolution + MaxPooling layers for hierarchical feature extraction.
-
-     Bottleneck: Deep feature representation capturing spatial patterns.
-
-     Decoder: Transposed convolutions with skip connections for reconstruction.
-
-     Output: Binary segmentation mask (sigmoid activation).
-
-Loss function: Binary Crossentropy
-Optimizer: Adam (learning rate = 1e-4)
-Evaluation metric: Accuracy
+## 🧩 Features
+✅ Upload any **SAR image (any size)** – the model automatically rescales and normalizes  
+✅ **Threshold slider** to adjust detection sensitivity  
+✅ **Overlay view** highlighting detected oil regions in red  
+✅ **Statistical summary** of detection confidence and oil coverage percentage  
+✅ **Interactive Gradio UI** – lightweight and deployable anywhere  
 
 
 
-🚀 Training :
+## ⚙️ Installation
 
-     The model is trained on the train set and validated on the val set.
+If you want to test locally (no deployment needed):
 
-     Checkpointing ensures the best model is always saved.
-     
-     Training can be resumed from the last saved model for additional epochs.
+```bash
+git clone https://huggingface.co/spaces/<your_username>/SpillGuard
+cd SpillGuard
+pip install -r requirements.txt
+python app.py
 
+Then visit:
+http://127.0.0.1:7860
 
+## 🧠 How It Works
 
-🧪 Evaluation :
+1.SAR Preprocessing
+   --Converts image to grayscale
+   --Normalizes intensities (1–99 percentile clipping)
+   --Expands to 3 channels (for ResNet backbone compatibility)
 
-      The trained model is tested on unseen test set images.
+2.Model Inference
+   --DeepLabV3+ predicts oil probability map (512×512)
+   --Resized back to original image dimensions
 
-      Results are visualized as side-by-side plots:
+3.Post-Processing
+   --Threshold applied to obtain binary segmentation
+   --Overlay generated for intuitive visualization
+   --Key statistics displayed (oil area %, confidence, severity)
 
-      Original image
+🧭 Project Structure
 
-      Ground truth mask
-
-      Predicted mask
-
-   This helps assess segmentation quality.
-
-
-
-🌐 Flask Web App :
-
-     Provides a simple upload interface.
-
-     Users can upload satellite images.
- 
-    The app returns:
-
-    Original image
-
-    Predicted segmentation mask
-
-   Heatmap overlay of oil spill regions
+SpillGuard/
+│
+├── app.py                # Main Gradio App (ready for Hugging Face)
+├── requirements.txt       # Dependencies list
+├── deeplabv3p_best.pth    # Trained model weights
 
 
+💡 Future Enhancements
+
+   🌐 Integrate with real-time Sentinel-1 satellite APIs
+   📦 Deploy a lightweight version for on-board drone inference
+   🔔 Add anomaly detection & alert system
+   📈 Include confidence heatmaps as downloadable results
+
+
+🧑‍💻 Author
+
+Developed by: Dilshad Ali
+Field: Artificial Intelligence & Deep Learning
+Focus: Environmental AI, Computer Vision, and Remote Sensing
+GitHub: https://github.com/dilshadalikhan2004
